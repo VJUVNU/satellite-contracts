@@ -5,6 +5,7 @@ namespace Vju\SatelliteContracts\Tests;
 use PHPUnit\Framework\TestCase;
 use Vju\SatelliteContracts\Sync\CanonicalFingerprint;
 use Vju\SatelliteContracts\Sync\EventKey;
+use Vju\SatelliteContracts\Sync\GlobalFingerprint;
 use Vju\SatelliteContracts\Sync\SyncStringNormalizer;
 
 class CanonicalFingerprintTest extends TestCase
@@ -75,6 +76,24 @@ class CanonicalFingerprintTest extends TestCase
         $this->assertSame(
             'bulk:user:'.hash('sha256', 'k1|k2'),
             EventKey::forBulk('bulk', 'user', ['k1', 'k2']),
+        );
+    }
+
+    /**
+     * Contract §5.2: sha256 of the JSON-encoded `"<id>:<fingerprint>"` list
+     * ordered by id ascending. Pinned so hub and satellites stay in lockstep.
+     */
+    public function test_global_fingerprint_orders_by_id_ascending(): void
+    {
+        $expected = hash('sha256', json_encode(
+            ['3:bbb', '7:aaa'],
+            JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR,
+        ));
+
+        $this->assertSame($expected, GlobalFingerprint::fromMap([7 => 'aaa', 3 => 'bbb']));
+        $this->assertSame(
+            GlobalFingerprint::fromMap([3 => 'bbb', 7 => 'aaa']),
+            GlobalFingerprint::fromMap([7 => 'aaa', 3 => 'bbb']),
         );
     }
 }

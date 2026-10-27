@@ -1,11 +1,11 @@
 {
     "name": "vju/satellite-contracts",
-    "description": "Shared hub<->satellite sync contracts for VJU Hub: canonical fingerprint hashing, event keys, header and entity-type constants.",
+    "description": "Shared contracts between VJU apps: hub<->satellite sync fingerprints, event keys, header constants, and HMAC request signing for machine-to-machine APIs.",
     "type": "library",
     "license": "proprietary",
     "require": {
         "php": "^8.2",
-        "illuminate/support": "^11.0|^12.0"
+        "illuminate/support": "^11.0|^12.0|^13.0"
     },
     "suggest": {
         "ext-intl": "Required for NFC unicode normalization of payload strings (fingerprint parity with the hub)"

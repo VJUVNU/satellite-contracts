@@ -13,6 +13,7 @@ Shared hub ↔ satellite contract code for the VJU Hub ecosystem. Installed by
 | `Vju\SatelliteContracts\Sync\EventKey` | Idempotency key builders for single and bulk (v1.2) envelopes. |
 | `Vju\SatelliteContracts\Sync\EntityTypes` | `user`, `department` entity type identifiers. |
 | `Vju\SatelliteContracts\Headers` | All `X-*` header names: webhook secret, hub origin, sync source, API token, on-behalf-of. |
+| `Vju\SatelliteContracts\Signing\RequestSignature` | HMAC signing for app-to-app APIs (payment gateway, e-invoice, their client packages): `sign()`, `verify()` with rotation secrets, `headers()` for outgoing calls, `X-Vju-*` header names. Same formula as Enrollment `MirrorSignature` / portal `SyncSignature`. Frozen — pinned vector in `tests/RequestSignatureTest.php`. |
 
 ## Contract stability
 
